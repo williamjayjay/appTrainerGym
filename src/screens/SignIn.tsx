@@ -6,7 +6,7 @@ import { InputCustom } from "@components/InputCustom";
 
 export function SignIn() {
     return (
-        <VStack flex={1} bg="gray.700">
+        <VStack flex={1} bg="gray.700" px='10'>
             <Image
                 source={BackgroundImg}
                 alt="Pessoas treinando"
@@ -27,8 +27,15 @@ export function SignIn() {
                 </Heading>
 
             </Center>
-            <InputCustom placeholder="Email" />
-            <InputCustom placeholder="Senha" />
+            <InputCustom
+                autoCapitalize="none"
+                keyboardType="email-address"
+                placeholder="Email" />
+
+            <InputCustom
+
+                secureTextEntry
+                placeholder="Senha" />
 
         </VStack>
     );
