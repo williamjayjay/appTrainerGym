@@ -40,6 +40,13 @@ export function SignIn() {
                 <ButtonCustom title="Acessar" />
             </Center>
 
+            <ButtonCustom
+
+                variant='outline'
+
+                title="Criar conta" />
+
+
         </VStack>
     );
 }
