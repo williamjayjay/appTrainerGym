@@ -4,6 +4,7 @@ import { IInputProps, Input } from "native-base";
 export function InputCustom({ ...rest }: IInputProps) {
     return (
         <Input
+            w='full'
             bg='gray.700'
             h={14}
             borderWidth={0}

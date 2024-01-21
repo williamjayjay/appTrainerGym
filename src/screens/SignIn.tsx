@@ -3,6 +3,7 @@ import { VStack, Image, Center, Text, Heading } from "native-base";
 import BackgroundImg from '@assets/background.png';
 import LogoSvg from '@assets/logo.svg'
 import { InputCustom } from "@components/InputCustom";
+import { ButtonCustom } from "@components/ButtonCustom";
 
 export function SignIn() {
     return (
@@ -26,16 +27,18 @@ export function SignIn() {
                     Acesse sua conta
                 </Heading>
 
+                <InputCustom
+                    autoCapitalize="none"
+                    keyboardType="email-address"
+                    placeholder="Email" />
+
+                <InputCustom
+
+                    secureTextEntry
+                    placeholder="Senha" />
+
+                <ButtonCustom title="Acessar" />
             </Center>
-            <InputCustom
-                autoCapitalize="none"
-                keyboardType="email-address"
-                placeholder="Email" />
-
-            <InputCustom
-
-                secureTextEntry
-                placeholder="Senha" />
 
         </VStack>
     );
