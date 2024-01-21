@@ -2,7 +2,7 @@ import { Button, IButtonProps, Text } from "native-base";
 
 type Props = IButtonProps & {
     title: string;
-    variant: 'solid' | 'outline'
+    variant?: 'solid' | 'outline'
 }
 
 export function ButtonCustom({ title, variant, ...rest }: Props) {

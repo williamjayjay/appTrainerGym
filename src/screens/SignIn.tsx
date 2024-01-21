@@ -1,4 +1,4 @@
-import { VStack, Image, Center, Text, Heading } from "native-base";
+import { VStack, Image, Center, Text, Heading, ScrollView } from "native-base";
 
 import BackgroundImg from '@assets/background.png';
 import LogoSvg from '@assets/logo.svg'
@@ -7,46 +7,57 @@ import { ButtonCustom } from "@components/ButtonCustom";
 
 export function SignIn() {
     return (
-        <VStack flex={1} bg="gray.700" px='10'>
-            <Image
-                source={BackgroundImg}
-                alt="Pessoas treinando"
-                resizeMode="contain"
-                position="absolute"
-            />
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false} >
 
-            <Center my={24} >
-                <LogoSvg />
-                <Text color='gray.100' fontSize="sm" >
-                    Treine sua mente e o seu corpo
-                </Text>
-            </Center>
+            <VStack flex={1} bg="gray.700" px='10' pb={16}>
+                <Image
+                    source={BackgroundImg}
+                    alt="Pessoas treinando"
+                    resizeMode="contain"
+                    position="absolute"
+                />
 
-            <Center>
-                <Heading color='gray.100' fontSize='xl' mb={6} fontFamily='heading' >
-                    Acesse sua conta
-                </Heading>
+                <Center my={20} >
+                    <LogoSvg />
+                    <Text color='gray.100' fontSize="sm" >
+                        Treine sua mente e o seu corpo
+                    </Text>
+                </Center>
 
-                <InputCustom
-                    autoCapitalize="none"
-                    keyboardType="email-address"
-                    placeholder="Email" />
+                <Center>
+                    <Heading color='gray.100' fontSize='xl' mb={6} fontFamily='heading' >
+                        Acesse sua conta
+                    </Heading>
 
-                <InputCustom
+                    <InputCustom
+                        autoCapitalize="none"
+                        keyboardType="email-address"
+                        placeholder="Email" />
 
-                    secureTextEntry
-                    placeholder="Senha" />
+                    <InputCustom
 
-                <ButtonCustom title="Acessar" />
-            </Center>
+                        secureTextEntry
+                        placeholder="Senha" />
 
-            <ButtonCustom
+                    <ButtonCustom title="Acessar" />
+                </Center>
 
-                variant='outline'
+                <Center mt={24}>
+                    <Text
+                        color='gray.100'
+                        fontSize='sm'
+                        mb={3}
+                        fontFamily='body'
 
-                title="Criar conta" />
+                    >Ainda não tem acesso?</Text>
+                    <ButtonCustom
+                        variant='outline'
+                        title="Criar conta" />
 
 
-        </VStack>
+                </Center>
+            </VStack>
+        </ScrollView>
+
     );
 }
