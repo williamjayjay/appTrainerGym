@@ -1,17 +1,30 @@
-import { IInputProps, Input } from "native-base";
+import { IInputProps, Input, FormControl } from "native-base";
+
+type Props = IInputProps & {
+  errorMessage?: string | null;
+}
+
+export function InputCustom({ errorMessage = null, isInvalid, ...rest }: Props) {
+
+const invalid = !!errorMessage || isInvalid;
 
 
-export function InputCustom({ ...rest }: IInputProps) {
     return (
+        <FormControl isInvalid={invalid} mb={4}>
         <Input
             w='full'
+            bg='gray.700'
             h={14}
             borderWidth={0}
             fontSize='md'
             color='white'
             fontFamily='body'
-            mb='4'
             placeholderTextColor='gray.300'
+             isInvalid={invalid}
+        _invalid={{
+          borderWidth: 1,
+          borderColor: "red.500"
+        }}
             _focus={{
                 bg: 'gray.700',
                 borderWidth: 1,
@@ -19,5 +32,11 @@ export function InputCustom({ ...rest }: IInputProps) {
             }}
             {...rest}
         />
+
+        <FormControl.ErrorMessage _text={{ color: 'red.500' }}>
+        {errorMessage}
+      </FormControl.ErrorMessage>
+
+    </FormControl>
     )
 }

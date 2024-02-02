@@ -1,18 +1,50 @@
 import { VStack, Image, Center, Text, Heading, ScrollView } from "native-base";
-
+import { useForm, Controller } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import BackgroundImg from '@assets/background.png';
 import LogoSvg from '@assets/logo.svg'
 import { InputCustom } from "@components/InputCustom";
 import { ButtonCustom } from "@components/ButtonCustom";
 import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
+
+
+const signUpSchema = yup.object({
+  name: yup.string().required('Informe o nome'),
+  email: yup.string().required('Informe o e-mail').email('E-mail inválido'),
+password: yup.string().required('Informe a senha').min(6, 'A senha deve ter pelo menos 6 dígitos.'),
+password_confirm: yup.string().required('Confirme a senha.').oneOf([yup.ref('password'), null], 'A confirmação da senha não confere')
+
+});
 
 export function SignUp() {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordConfirm, setPasswordConfirm] = useState('');
 
     const navigation = useNavigation()
+
+    type FormDataProps = {
+  name: string;
+  email: string;
+  password: string;
+  password_confirm: string;
+}
+
+    const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
+        resolver: yupResolver(signUpSchema),
+    });
 
     function handleGoBack() {
         navigation.goBack()
     }
+
+    function handleSignUp({ name, email, password, password_confirm }: FormDataProps) {
+    console.log({ name, email, password, password_confirm })
+  }
+
 
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false} >
@@ -38,25 +70,75 @@ export function SignUp() {
                         Crie sua conta
                     </Heading>
 
-                    <InputCustom
-                        placeholder="Nome" />
+                    <Controller 
+            control={control}
+            name="name"
+            render={({ field: { onChange, value } }) => (
+              <InputCustom 
+                placeholder="Nome"
+                onChangeText={onChange}
+                value={value}
+                errorMessage={errors.name?.message}
 
-                    <InputCustom
-                        autoCapitalize="none"
-                        keyboardType="email-address"
-                        placeholder="Email" />
+              />
+            )}
+          />
 
 
-                    <InputCustom
+<Controller 
+            control={control}
+            name="email"
+            render={({ field: { onChange, value } }) => (
+              <InputCustom 
+                placeholder="E-mail" 
+                keyboardType="email-address"
+                autoCapitalize="none"
+                onChangeText={onChange}
+                value={value}
+                errorMessage={errors.email?.message}
+              />
+            )}
+          />
 
-                        secureTextEntry
-                        placeholder="Senha" />
+                    <Controller 
+            control={control}
+            name="password"
+            render={({ field: { onChange, value } }) => (
+              <InputCustom 
+                placeholder="Senha" 
+                secureTextEntry
+                onChangeText={onChange}
+                value={value}
+                errorMessage={errors.password?.message}
+              />
+            )}
+          />
+            
 
-                    <ButtonCustom title="Criar e acessar" />
+            <Controller 
+            control={control}
+            name="password_confirm"
+            render={({ field: { onChange, value } }) => (
+              <InputCustom 
+                placeholder="Confirmar a Senha" 
+                secureTextEntry
+                onChangeText={onChange}
+                value={value}
+                 onSubmitEditing={handleSubmit(handleSignUp)}
+                returnKeyType="send"
+                errorMessage={errors.password_confirm?.message}
+              />
+            )}
+          />
+
+
+                    <ButtonCustom 
+                    onPress={handleSubmit(handleSignUp)}
+                     title="Criar e acessar" />
                 </Center>
 
                 <ButtonCustom
-                    mt={24}
+                    mt={12}
                     variant='outline'
                     title="Voltar para o login"
                     onPress={handleGoBack}
