@@ -7,74 +7,88 @@ import LogoSvg from '@assets/logo.svg'
 import { InputCustom } from "@components/InputCustom";
 import { ButtonCustom } from "@components/ButtonCustom";
 import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
+import { api } from "@services/api";
+import Toast from 'react-native-toast-message';
+import { AppError } from "@utils/AppError";
 
 
 const signUpSchema = yup.object({
   name: yup.string().required('Informe o nome'),
   email: yup.string().required('Informe o e-mail').email('E-mail inválido'),
-password: yup.string().required('Informe a senha').min(6, 'A senha deve ter pelo menos 6 dígitos.'),
-password_confirm: yup.string().required('Confirme a senha.').oneOf([yup.ref('password'), null], 'A confirmação da senha não confere')
-
-});
+  password: yup.string().required('Informe a senha').min(6, 'A senha deve ter pelo menos 6 dígitos.'),
+  password_confirm: yup.string().required('Confirme a senha.').oneOf([yup.ref('password'), null] as (string | yup.Reference<unknown>)[], 'A confirmação da senha não confere')
+})
 
 export function SignUp() {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordConfirm, setPasswordConfirm] = useState('');
 
-    const navigation = useNavigation()
+  const navigation = useNavigation()
 
-    type FormDataProps = {
-  name: string;
-  email: string;
-  password: string;
-  password_confirm: string;
-}
+  type FormDataProps = {
+    name: string;
+    email: string;
+    password: string;
+    password_confirm: string;
+  }
 
-    const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
-        resolver: yupResolver(signUpSchema),
-    });
+  const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
+    resolver: yupResolver(signUpSchema),
+  });
 
-    function handleGoBack() {
-        navigation.goBack()
+  function handleGoBack() {
+    navigation.goBack()
+  }
+
+  async function handleSignUp({ name, email, password }: FormDataProps) {
+
+
+    try {
+      const response = await api.post('/users', { name, email, password });
+      console.log(response.data);
+    } catch (error) {
+
+      const isAppError = error instanceof AppError;
+
+
+      const title = isAppError ? error.message : 'Não foi possível criar a conta. Tente novamente mais tarde';
+
+      Toast.show({
+        text1: title,
+        type: 'error',
+      });
     }
 
-    function handleSignUp({ name, email, password, password_confirm }: FormDataProps) {
-    console.log({ name, email, password, password_confirm })
   }
 
 
-    return (
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false} >
+  return (
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false} >
 
-            <VStack flex={1} px='10' pb={16}>
-                <Image
-                    source={BackgroundImg}
-                    defaultSource={BackgroundImg}
-                    alt="Pessoas treinando"
-                    resizeMode="contain"
-                    position="absolute"
-                />
+      <VStack flex={1} px='10' pb={16}>
+        <Image
+          source={BackgroundImg}
+          defaultSource={BackgroundImg}
+          alt="Pessoas treinando"
+          resizeMode="contain"
+          position="absolute"
+        />
 
-                <Center my={20} >
-                    <LogoSvg />
-                    <Text color='gray.100' fontSize="sm" >
-                        Treine sua mente e o seu corpo
-                    </Text>
-                </Center>
+        <Center my={20} >
+          <LogoSvg />
+          <Text color='gray.100' fontSize="sm" >
+            Treine sua mente e o seu corpo
+          </Text>
+        </Center>
 
-                <Center>
-                    <Heading color='gray.100' fontSize='xl' mb={6} fontFamily='heading' >
-                        Crie sua conta
-                    </Heading>
+        <Center>
+          <Heading color='gray.100' fontSize='xl' mb={6} fontFamily='heading' >
+            Crie sua conta
+          </Heading>
 
-                    <Controller 
+          <Controller
             control={control}
             name="name"
             render={({ field: { onChange, value } }) => (
-              <InputCustom 
+              <InputCustom
                 placeholder="Nome"
                 onChangeText={onChange}
                 value={value}
@@ -85,12 +99,12 @@ export function SignUp() {
           />
 
 
-<Controller 
+          <Controller
             control={control}
             name="email"
             render={({ field: { onChange, value } }) => (
-              <InputCustom 
-                placeholder="E-mail" 
+              <InputCustom
+                placeholder="E-mail"
                 keyboardType="email-address"
                 autoCapitalize="none"
                 onChangeText={onChange}
@@ -100,12 +114,12 @@ export function SignUp() {
             )}
           />
 
-                    <Controller 
+          <Controller
             control={control}
             name="password"
             render={({ field: { onChange, value } }) => (
-              <InputCustom 
-                placeholder="Senha" 
+              <InputCustom
+                placeholder="Senha"
                 secureTextEntry
                 onChangeText={onChange}
                 value={value}
@@ -113,18 +127,18 @@ export function SignUp() {
               />
             )}
           />
-            
 
-            <Controller 
+
+          <Controller
             control={control}
             name="password_confirm"
             render={({ field: { onChange, value } }) => (
-              <InputCustom 
-                placeholder="Confirmar a Senha" 
+              <InputCustom
+                placeholder="Confirmar a Senha"
                 secureTextEntry
                 onChangeText={onChange}
                 value={value}
-                 onSubmitEditing={handleSubmit(handleSignUp)}
+                onSubmitEditing={handleSubmit(handleSignUp)}
                 returnKeyType="send"
                 errorMessage={errors.password_confirm?.message}
               />
@@ -132,20 +146,20 @@ export function SignUp() {
           />
 
 
-                    <ButtonCustom 
-                    onPress={handleSubmit(handleSignUp)}
-                     title="Criar e acessar" />
-                </Center>
+          <ButtonCustom
+            onPress={handleSubmit(handleSignUp)}
+            title="Criar e acessar" />
+        </Center>
 
-                <ButtonCustom
-                    mt={12}
-                    variant='outline'
-                    title="Voltar para o login"
-                    onPress={handleGoBack}
-                />
+        <ButtonCustom
+          mt={12}
+          variant='outline'
+          title="Voltar para o login"
+          onPress={handleGoBack}
+        />
 
-            </VStack>
-        </ScrollView>
+      </VStack>
+    </ScrollView>
 
-    );
+  );
 }
