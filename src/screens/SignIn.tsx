@@ -13,31 +13,28 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 
 const signInSchema = yup.object({
-  email: yup.string().required('Informe o e-mail').email('E-mail inválido'),
-password: yup.string().required('Informe a senha').min(6, 'A senha deve ter pelo menos 6 dígitos.'),
+    email: yup.string().required('Informe o e-mail').email('E-mail inválido'),
+    password: yup.string().required('Informe a senha').min(6, 'A senha deve ter pelo menos 6 dígitos.'),
 });
 
+type FormDataProps = {
+    email: string;
+    password: string;
+}
 
 
 export function SignIn() {
 
-
-        const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
+    const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
         resolver: yupResolver(signInSchema),
     });
 
-    type FormDataProps = {
-  email: string;
-  password: string;
-}
-
-
     const navigation = useNavigation<AuthNavigatorRoutesProps>()
 
-     function handleSignIn({  email, password}: FormDataProps) {
-    console.log({ email, password})
-  }
-        function handleNewAccount() {
+    function handleSignIn({ email, password }: FormDataProps) {
+        console.log({ email, password })
+    }
+    function handleNewAccount() {
         navigation.navigate('signUp')
     }
 
@@ -64,41 +61,38 @@ export function SignIn() {
                     <Heading color='gray.100' fontSize='xl' mb={6} fontFamily='heading' >
                         Acesse sua conta
                     </Heading>
-<Controller 
-            control={control}
-            name="email"
-            render={({ field: { onChange, value } }) => (
-                                 <InputCustom 
-                placeholder="E-mail" 
-                keyboardType="email-address"
-                autoCapitalize="none"
-                onChangeText={onChange}
-                value={value}
-                errorMessage={errors.email?.message}
-                        />
-                            )}
-          />
+                    <Controller
+                        control={control}
+                        name="email"
+                        render={({ field: { onChange } }) => (
+                            <InputCustom
+                                placeholder="E-mail"
+                                keyboardType="email-address"
+                                autoCapitalize="none"
+                                onChangeText={onChange}
+                                errorMessage={errors.email?.message}
+                            />
+                        )}
+                    />
 
 
-      <Controller 
-            control={control}
-            name="password"
-            render={({ field: { onChange, value } }) => (
-                         <InputCustom 
-                placeholder="Senha" 
-                secureTextEntry
-                onChangeText={onChange}
-                value={value}
-                errorMessage={errors.password?.message}
+                    <Controller
+                        control={control}
+                        name="password"
+                        render={({ field: { onChange } }) => (
+                            <InputCustom
+                                placeholder="Senha"
+                                secureTextEntry
+                                onChangeText={onChange}
+                                errorMessage={errors.password?.message}
+                                onSubmitEditing={handleSubmit(handleSignIn)}
+                                returnKeyType="send"
+                            />
 
-  onSubmitEditing={handleSubmit(handleSignIn)}
-                returnKeyType="send"
-              />
+                        )}
+                    />
 
-                          )}
-          />
-
-                    <ButtonCustom  onPress={handleSubmit(handleSignIn)} title="Acessar" />
+                    <ButtonCustom onPress={handleSubmit(handleSignIn)} title="Acessar" />
                 </Center>
 
                 <Center mt={24}>
@@ -112,10 +106,8 @@ export function SignIn() {
                     <ButtonCustom
                         variant='outline'
                         title="Criar conta"
-                              onPress={handleNewAccount}
+                        onPress={handleNewAccount}
                     />
-
-
                 </Center>
             </VStack>
         </ScrollView>
