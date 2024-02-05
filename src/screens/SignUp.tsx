@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { VStack, Image, Center, Text, Heading, ScrollView } from "native-base";
 import { useForm, Controller } from 'react-hook-form';
 import * as yup from 'yup';
@@ -10,7 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import { api } from "@services/api";
 import Toast from 'react-native-toast-message';
 import { AppError } from "@utils/AppError";
-
+import { useAuth } from '@hooks/useAuth';
 
 const signUpSchema = yup.object({
   name: yup.string().required('Informe o nome'),
@@ -20,8 +21,11 @@ const signUpSchema = yup.object({
 })
 
 export function SignUp() {
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigation = useNavigation()
+
+  const { singIn } = useAuth();
 
   type FormDataProps = {
     name: string;
@@ -42,9 +46,13 @@ export function SignUp() {
 
 
     try {
+      setIsLoading(true)
       const response = await api.post('/users', { name, email, password });
-      console.log(response.data);
+
+      await singIn(email, password)
     } catch (error) {
+
+      setIsLoading(false);
 
       const isAppError = error instanceof AppError;
 
@@ -147,11 +155,13 @@ export function SignUp() {
 
 
           <ButtonCustom
+            isLoading={isLoading}
             onPress={handleSubmit(handleSignUp)}
             title="Criar e acessar" />
         </Center>
 
         <ButtonCustom
+          isDisabled={isLoading}
           mt={12}
           variant='outline'
           title="Voltar para o login"

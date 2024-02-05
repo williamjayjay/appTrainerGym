@@ -1,5 +1,5 @@
 import { VStack, Image, Center, Text, Heading, ScrollView } from "native-base";
-
+import { useState } from 'react';
 import BackgroundImg from '@assets/background.png';
 import LogoSvg from '@assets/logo.svg'
 import { useForm, Controller } from 'react-hook-form';
@@ -10,6 +10,9 @@ import { useNavigation } from "@react-navigation/native";
 import { AuthNavigatorRoutesProps } from "@routes/auth.routes";
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useAuth } from '@hooks/useAuth';
+import Toast from 'react-native-toast-message';
+import { AppError } from "@utils/AppError";
 
 
 const signInSchema = yup.object({
@@ -25,15 +28,44 @@ type FormDataProps = {
 
 export function SignIn() {
 
+    const [isLoading, setIsLoading] = useState(false)
+
+    const { singIn } = useAuth();
+
     const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
         resolver: yupResolver(signInSchema),
     });
 
     const navigation = useNavigation<AuthNavigatorRoutesProps>()
 
-    function handleSignIn({ email, password }: FormDataProps) {
-        console.log({ email, password })
+    async function handleSignIn({ email, password }: FormDataProps) {
+
+
+        try {
+            setIsLoading(true);
+            await singIn(email, password);
+
+            Toast.show({
+                text1: 'Usuário logado com sucesso!',
+                type: 'success',
+            });
+        } catch (error) {
+            const isAppError = error instanceof AppError;
+
+            const title = isAppError ? error.message : 'Não foi possível entrar. Tente novamente mais tarde.'
+
+            setIsLoading(false);
+            Toast.show({
+                text1: title,
+                type: 'error',
+            });
+        }
+
+
+
+
     }
+
     function handleNewAccount() {
         navigation.navigate('signUp')
     }
@@ -92,7 +124,9 @@ export function SignIn() {
                         )}
                     />
 
-                    <ButtonCustom onPress={handleSubmit(handleSignIn)} title="Acessar" />
+                    <ButtonCustom
+
+                        isLoading={isLoading} onPress={handleSubmit(handleSignIn)} title="Acessar" />
                 </Center>
 
                 <Center mt={24}>
@@ -104,6 +138,7 @@ export function SignIn() {
 
                     >Ainda não tem acesso?</Text>
                     <ButtonCustom
+                        isDisabled={isLoading}
                         variant='outline'
                         title="Criar conta"
                         onPress={handleNewAccount}

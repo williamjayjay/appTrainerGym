@@ -10,6 +10,12 @@ export function ButtonCustom({ title, variant, ...rest }: Props) {
         <Button
             w='full'
             h={14}
+            _disabled={{
+                bg: variant === 'outline' ? 'transparent' : 'green.500'
+            }}
+            _loading={{
+                bg: variant === 'outline' ? 'transparent' : 'green.500'
+            }}
             bg={variant === 'outline' ? 'transparent' : 'green.700'}
             borderWidth={variant === 'outline' ? 1 : 0}
             borderColor='green.500'
