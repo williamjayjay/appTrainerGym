@@ -1,6 +1,4 @@
-<h2 align="center">
-    Ignite Gym
-</h2>
+<h1 align="center">Projeto - React Native: App Trainer GYM</h1>
 
 <p align="center">
   <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/williamjayjay/appTrainerGym">
@@ -18,89 +16,108 @@
   </a>
 </p>
 
-<p>
-  <img src="github/cover.png" alt="cover ignite-fleet" />
-</p>
-
-<h4 align="center">
-🚀 Aplicação em andamento 🚀
-</h4>
+<p align="center">Vamos construir um aplicativo ao qual a principal feature é proteger dados em tela com refresh token assim mantendo a camada de segurança mais estável na aplicação, contudo também teremos formulário para login, cadastro e alteração de senha assim como foto de perfil também, e por fim utilizaremos bastante don context api. </p>
 
 <p align="center">
-  <a href="#page_with_curl-project">📃 Project</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#information_source-how-to-use">ℹ️ How To Use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#rocket-used-libraries">🚀 Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#man_technologist-author">👨‍💻 Author</a>&nbsp;&nbsp;&nbsp;
+<img alt="poc app trainer" src="github/cover.png" />
 </p>
 
-## Projeto Ignite GYM
-### Mobile
+## 🥶 Sobre o projeto
 
-<!-- <p align="center">
-  <img alt="Animated Mobile Demonstration" title="#Mobile" src="github/demo_ignite_gym_bg.gif" width="40%">
-</p> -->
+Desenvolvi esse projeto para reforçar meu conhecimento principalmente com login e registro autenticado e rotas protegidas por token de sessão e refresh token e também context api
 
-## :information_source: How To Use
 
-1- Clone the repository
+## Mobile React Native:
 
-```bash
-git clone https://github.com/williamjayjay/appTrainerGym
-```
+**Aplicativo:** O app irá registrar os treinos feitos em um ambiente de academia.
 
-2- Install the dependencies
-```bash
-yarn
-```
 
-3- Run web application
-```bash
-yarn start
-```
+## 🚀 Tecnologias
 
-OR 
-```bash
-yarn android 
-```
+Principais tecnologias que utilizei para desenvolver esta aplicação
 
-OR 
-```bash
-yarn ios 
-```
-
-## :rocket: Used libraries
-
-- [Expo](https://expo.dev/)
 - [Typescript](https://www.typescriptlang.org/)
-- [ReactNative](https://reactnative.dev/)
+- [Async-Storage](https://docs.expo.dev/versions/latest/sdk/async-storage/)
+- [Async-Storage](https://docs.expo.dev/versions/latest/sdk/async-storage/)
+- [React-Navigation](https://reactnavigation.org/)
+- [Expo-File-System](https://docs.expo.dev/versions/latest/sdk/filesystem/)
+- [Expo-Font](https://docs.expo.dev/versions/latest/sdk/font/)
+- [Expo-Image-Picker](https://docs.expo.dev/versions/latest/sdk/imagepicker/)
+- [Expo-Image-Picker](https://docs.expo.dev/versions/latest/sdk/imagepicker/)
 - [Native-Base](https://nativebase.io/)
-- [React-Navigation/native](https://reactnavigation.org/docs/getting-started/)
-- [React-Navigation/native-stack](https://reactnavigation.org/docs/hello-react-navigation)
-- [React-native-svg](https://github.com/software-mansion/react-native-svg)
-- [React-native-toast-message](https://github.com/calintamas/react-native-toast-message)
+- [React-Hook-Form](https://react-hook-form.com/)
+- [React-Hook-Form](https://react-hook-form.com/)
+- [React-Native-Safe-Area-Context](https://docs.expo.dev/versions/latest/sdk/safe-area-context/)
+- [React-Native-Toast-Message](https://www.npmjs.com/package/react-native-toast-message)
+- [React-Native-SVG](https://docs.expo.dev/versions/latest/sdk/svg/)
+- [Yup](https://www.npmjs.com/package/yup)
+
+## Guia de inicialização
+
+Para instalar e configurar uma cópia local, siga estas etapas simples:
+
+### Prerequisitos
+
+Para garantir o funcionamento adequado da nossa aplicação, verifique abaixo:
 
 
-## :man_technologist: Author
+1. **Clone o repositório de terceiros que contém a api pronta para poder testar o app**: Neste link: [API-Terceiros](https://github.com/rocketseat-education/ignite-rn-04-ignite-gym)
 
-<div align="center">
- <p>Developed by William Gomes</p>
-<div>
-<table>
-  <tr>
-    <td align="center">
-      <a href="http://github.com/williamjayjay/">
-        <img src="https://avatars.githubusercontent.com/u/52439569?v=4" width="75px;" alt="William Gomes"/>
-        <br />
-        <sub>
-          <b>William Gomes</b>
-        </sub>
-       </a>
-       </td>
-  </tr>
-</table>
-</div>
+2. **Clone o repositório**:
+  ```sh
+  git clone https://github.com/williamjayjay/appTrainerGym
+  ```
 
-[![Linkedin Badge](https://img.shields.io/badge/-William%20Gomes-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/william-gomes-aab694149/)](https://www.linkedin.com/in/william-gomes-aab694149/)
+3. **Navegue na raiz do projeto appTrainerGym:**
 
-</div>
+4. **Instale os módulos:**
+  ```sh
+  bun i
+  ```
+
+5. **Copie o .env de exemplo:** 
+
+6. **Rode o aplicativo:**
+  ```sh
+  bun android
+  ```
+
+## Roadmap
+
+- [x] Iniciar o aplicativo, conseguir fazer cadastro e login
+
+- [x] No cadastro seguir as regras de email e senha(6 digitos) e senhas iguais.
+
+- [x] No login fazer validação
+
+- [x] Conseguir visualizar os treinos a serem marcados
+
+- [x] Conseguir finalizar um treino
+
+- [x] Conseguir ver treino finalizado na aba de histórico
+
+- [x] Conseguir alterar foto de perfil
+
+- [x] Conseguir alterar senha
+
+- [x] Ser feita a validação do refresh token baseado no tempo de expiração da api a seguir 
+
+
+<!-- --------------------- -->
+## UI UX
+UI e UX feita pelo time de design do treinamento do curso da rocketseat.
+
+-Link para vídeo da aplicação [Video-React-Native](https://vimeo.com/user218525617)
+
+| Tela de login | Tela de cadastro |
+|:-------------------------:|:-------------------------:|
+| ![Tela de início](github/tela_login.png) | ![Tela de início-6](github/tela_cadastro.png) |
+
+| Tela de home | Tela de treinos |
+|:-------------------------:|:-------------------------:|
+| ![Tela de início-3](github/tela_home.png) | ![Tela de início-fulll](github/tela_treinos.png) |
+
+| Tela de histórico | Tela de perfil |
+|:-------------------------:|:-------------------------:|
+| ![Tela de início-3](github/tela_historico.png) | ![Tela de início-fulll](github/tela_perfil.png) |
 
