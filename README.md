@@ -107,7 +107,7 @@ Para garantir o funcionamento adequado da nossa aplicação, verifique abaixo:
 ## UI UX
 UI e UX feita pelo time de design do treinamento do curso da rocketseat.
 
--Link para vídeo da aplicação [Video-React-Native](https://vimeo.com/user218525617)
+-Link para vídeo da aplicação [Video-React-Native](https://vimeo.com/939102881)
 
 | Tela de login | Tela de cadastro |
 |:-------------------------:|:-------------------------:|
