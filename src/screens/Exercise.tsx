@@ -61,7 +61,15 @@ export function Exercise() {
         try {
             setSendingRegister(true);
 
-            await api.post('/history', { exercise_id: exerciseId });
+            const resultado = await api.post('/history', { exercise_id: exerciseId });
+
+            if (!resultado.status.toString().startsWith('2')) {
+
+                Toast.show({
+                    text1: `Erro. status code: ${resultado.status}`,
+                    type: 'error',
+                });
+            }
 
             Toast.show({
                 text1: 'Parabéns! Exercício registrado no seu histórico.',

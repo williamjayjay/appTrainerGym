@@ -30,7 +30,6 @@ export function Home() {
     async function fetchGroups() {
         try {
             const response = await api.get('/groups');
-            console.log(response.data);
             setGroups(response.data);
 
         } catch (error) {

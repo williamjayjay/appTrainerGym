@@ -118,11 +118,21 @@ export function Profile() {
 
         userPhotoUploadForm.append('avatar', photoFile);
 
+
         const avatarUpdtedResponse = await api.patch('/users/avatar', userPhotoUploadForm, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         });
+
+
+        if (!avatarUpdtedResponse.status.toString().startsWith('2')) {
+
+          Toast.show({
+            text1: `Erro. status code: ${avatarUpdtedResponse.status}`,
+            type: 'error',
+          });
+        }
 
         const userUpdated = user;
 
